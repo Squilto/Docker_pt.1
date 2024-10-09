@@ -5,7 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/tictactoe', {
+mongoose.connect('mongodb://localhost/docker_Proj', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
