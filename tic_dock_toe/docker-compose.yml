@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build: ./client         # Build React app from the client directory
+    ports:
+      - "3000:3000"         # Expose React app on port 3000
+    depends_on:
+      - backend             # Wait for backend to start
+
+  backend:
+    build: ./server         # Build Node.js backend from the server directory
+    ports:
+      - "5000:5000"         # Expose backend API on port 5000
+    depends_on:
+      - mongo               # Wait for MongoDB to start
+
+  mongo:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
