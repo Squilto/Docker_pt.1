@@ -1,27 +1,30 @@
+version: '3.8'
+
 services:
   frontend:
-    build: ./client         # Build React app from the client directory
+    build: ./client
     ports:
-      - "3000:3000"         # Expose React app on port 3000
+      - "3000:3000"
     depends_on:
-      - backend             # Wait for backend to start
+      - backend
 
   backend:
-    build: ./server         # Build Node.js backend from the server directory
+    build: ./server
     ports:
-      - "5000:5000"         # Expose backend API on port 5000
+      - "5000:5000"
     depends_on:
-      - mongo               # Wait for MongoDB to start
+      - postgres
 
-  mongo:
-    image: mongo:5.0
-    ports:
-      - "27017:27017"
+  postgres:
+    image: postgres:13
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: docker_proj
+    ports:
+      - "5432:5432"
     volumes:
-      - mongo_data:/data/db
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  mongo_data:
+  postgres_data:
