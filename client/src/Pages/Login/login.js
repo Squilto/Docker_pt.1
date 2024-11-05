@@ -1,15 +1,35 @@
 // Login.js
-import React from 'react';
+import React, { useState } from 'react';
+import './login.css';
 
 function Login({ onLogin }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleLogin = () => {
-    const dummyUser = { username: 'testUser' }; // Replace with actual login logic
-    onLogin(dummyUser);
+    // Here, we could add fetch/axios POST request to your backend API for authentication
+    if (username && password) {
+      onLogin(username); // Pass the username to parent for state management
+    } else {
+      alert('Please enter both username and password');
+    }
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login Page</h2>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
       <button onClick={handleLogin}>Log In</button>
     </div>
   );
