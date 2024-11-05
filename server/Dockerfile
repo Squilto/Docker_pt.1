@@ -1,17 +1,17 @@
-# Dockerfile (Backend)
-FROM node:14
+FROM node:16
 
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to install dependencies
+# Install app dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy all files to the container
+# Bundle app source
 COPY . .
 
-# Expose port 5000 for backend API
+# Expose the port your app runs on
 EXPOSE 5000
 
-# Start the server
-CMD ["node", "server.js"]
+# Start the app
+CMD [ "node", "server.js" ]

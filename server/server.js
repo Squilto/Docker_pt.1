@@ -78,3 +78,22 @@ app.post('/api/make-move', async (req, res) => {
     res.status(500).json({ message: 'Error recording move', error });
   }
 });
+
+app.put('/api/students/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, score } = req.body;
+  try {
+    const result = await pool.query(
+      'UPDATE students SET name = $1, score = $2 WHERE id = $3 RETURNING *',
+      [name, score, id]
+    );
+    if (result.rows.length === 0) {
+      res.status(404).json({ error: "Student not found" });
+    } else {
+      res.json(result.rows[0]);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
